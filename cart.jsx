@@ -104,19 +104,19 @@ const Products = (props) => {
     const name = e.target.name;
     const item = items.find((item) => item.name === name);
 
-    const itemInCart = cart.find(item => item?.name === name);
+    const itemInCart = cart.find(item => item?.name === name); // check if the item is already in the cart
     if (!itemInCart) {
-      const cartItem = {...item, count: 1};
+      const cartItem = {...item, count: 1}; // if not, add it
       setCart([...cart, cartItem]);
     }
     else {
-      itemInCart.count++;
+      itemInCart.count++; // if yes, then increment its count
       setCart([...cart]);
     }
     console.log(`add to Cart ${JSON.stringify(item)}`);
 
-    item.instock--;
-    setItems(items);
+    item.instock--; // each time we add an item to the cart, decrement its instock
+    setItems(items); // since we're editing the item reference, it's enough to setItems() to the new value
     doFetch(query);
   };
 
@@ -172,13 +172,13 @@ const Products = (props) => {
     console.log(`total updated to ${newTotal}`);
     return newTotal;
   };
-  // TODO: implement the restockProducts function
+ 
   const restockProducts = (url) => {
-    doFetch(url);
+    doFetch(url); // fetch latest products
     const newItems = data.map(({name, country, cost, instock}) => {
-      return {name, country, cost, instock};
+      return {name, country, cost, instock}; // get latest products from data (which updates automatically via the reducer)
     });
-    setItems(newItems);
+    setItems(newItems); // set the new items
   };
 
   return (
